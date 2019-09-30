@@ -1,4 +1,6 @@
 const rangeSlider = document.getElementById('pass-range-slider');
+const marginMin = document.getElementById('slider-margin-value-min');
+const marginMax = document.getElementById('slider-margin-value-max');
 
 noUiSlider.create(rangeSlider, {
   start: [8, 16],
@@ -9,9 +11,6 @@ noUiSlider.create(rangeSlider, {
     'max': 24
   }
 });
-
-const marginMin = document.getElementById('slider-margin-value-min');
-const marginMax = document.getElementById('slider-margin-value-max');
 
 rangeSlider.noUiSlider.on('update', function (values, handle) {
   if (handle) {
