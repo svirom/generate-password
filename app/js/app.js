@@ -20,6 +20,7 @@ rangeSlider.noUiSlider.on('update', function (values, handle) {
   }
 });
 
+
 const lowercaseArr = ['a', 'b',  'c',  'd',  'e',  'f',  'g',  'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',  'p',  'q',  'r',  's',  't',  'u',  'v',  'w',  'x',  'y',  'z'];
 
 const uppercaseArr = ['A', 'B',  'C',  'D',  'E',  'F',  'G',  'H',  'I',  'J',  'K',  'L',  'M',  'N',  'O',  'P',  'Q',  'R',  'S',  'T',  'U',  'V',  'W',  'X',  'Y',  'Z'];
@@ -28,7 +29,15 @@ const numberArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 const asciiArr = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', '-', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'];
 
+document.querySelector('.pass-ascii-separate').addEventListener('DOMContentLoaded', addASCII);
+
 document.getElementById('generate').addEventListener('click', generatePass);
+
+function addASCII() {
+  for (let i = 0, i < asciiArr.length; i++) {
+    
+  }
+}
 
 function generatePass() {
 
