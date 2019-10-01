@@ -3,7 +3,7 @@ const marginMin = document.getElementById('slider-margin-value-min');
 const marginMax = document.getElementById('slider-margin-value-max');
 
 noUiSlider.create(rangeSlider, {
-  start: [8, 16],
+  start: [8, 24],
   connect: true,
   step: 1,
   range: {
@@ -29,13 +29,29 @@ const numberArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 const asciiArr = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', '-', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'];
 
-document.querySelector('.pass-ascii-separate').addEventListener('DOMContentLoaded', addASCII);
+document.addEventListener('DOMContentLoaded', addASCII);
 
 document.getElementById('generate').addEventListener('click', generatePass);
 
 function addASCII() {
-  for (let i = 0, i < asciiArr.length; i++) {
-    
+  for (let i = 0; i < asciiArr.length; i++) {
+    let elASCII = document.createElement('span');
+    elASCII.classList.add('ascii-element');
+    elASCII.innerHTML = `
+      <label for="el${asciiArr[i]}">${asciiArr[i]}</label>
+      <input type="checkbox" name="" id="el${asciiArr[i]}">
+      <span></span>
+    `;
+    document.querySelector('.pass-ascii-separate').appendChild(elASCII);
+  }
+}
+
+document.querySelector('.pass-ascii-all').addEventListener('click', labelActive);
+
+function labelActive(event) {
+  if (event.target == this.querySelector('#ascii-all')) {
+    // console.log(event.target);
+    this.querySelector('label').classList.toggle('active');
   }
 }
 

@@ -42,10 +42,12 @@ img {
 /*------ End Reset styles ------*/
 body {
   font: normal 1rem / 1.4 "Montserrat", sans-serif;
+  /* font: normal 1rem / 1.4 "Poppins", sans-serif; */
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-  color: #ffffff;
-  background-color: #006666;
+  color: #EBEBEB;
+  /* background-color: #006666; */
+  background-color: #2B3E50;
 }
 .wrapper {
   height: 100vh;
@@ -90,6 +92,64 @@ body {
 #pass-range-slider {
   margin: 10px 40px;
 }
+
+/* ASCII section */
+.pass-ascii-all {
+  position: relative;
+}
+.pass-ascii-all label {
+  display: inline-block;
+  font-weight: 400;
+  color: #EBEBEB;
+  text-align: center;
+  vertical-align: middle;
+  /* -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; */
+  background-color: #DF691A;
+  border: 1px solid #DF691A;
+  padding: 0.375rem 0.75rem;
+  font-size: 1.2rem;
+  /* line-height: 1.5; */
+  /* border-radius: 0px; */
+  cursor: pointer;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.pass-ascii-all label:hover {
+  background-color: #bd5916;
+  border-color: #b15315;
+}
+.pass-ascii-all label.active {
+  background-color: #b15315;
+  border-color: #a64e13;
+}
+.pass-ascii-all input {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  margin: 0;
+}
+.pass-ascii-all span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  color: #2B3E50;
+  vertical-align: middle;
+  background-color: #ffffff;
+}
+.pass-ascii-all span::before {
+  display: inline-block;
+  width: 100%;
+  content: "";
+  text-align: center;
+}
+.pass-ascii-all input[type="checkbox"]:checked + span::before {
+  content: "\2714";
+}
+/* Generate button */
 .btn-generate {
   display: inline-block;
   padding: 0.75rem 1rem;
