@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Password Gnerator</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+  <title>Password Generator</title>
   <link rel="stylesheet" href="css/multirange.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,11 +24,19 @@
           <label>Using ASCII characters in your password <small>(all or exclude separate characters)</small></label>
           <div class="pass-ascii">
             <div class="pass-ascii-all">
-              <label for="ascii-all" class="active">All</label>
+              <label for="ascii-all" class="ascii-all-label active">All</label>
               <input type="checkbox" name="ascii-all" id="ascii-all" checked>
               <span></span>
             </div>
-            <div class="pass-ascii-separate"></div>
+            <div class="pass-ascii-separate">
+              <div>
+                <span class="ascii-element ascii-uncheck">
+                    <label for="uncheck-all">Check / uncheck all</label>
+                    <input type="checkbox" id="uncheck-all" checked>
+                    <span></span>
+                  </span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="pass-button">
