@@ -18,25 +18,33 @@
             <span class="example-val" id="slider-margin-value-min"></span>
             <div id="pass-range-slider"></div>
             <span class="example-val" id="slider-margin-value-max"></span>
-            </div>
+          </div>
         </div>
-        <div class="pass-characters">
-          <label>Using ASCII characters in your password <small>(all or exclude separate characters)</small></label>
-          <div class="pass-ascii">
-            <div class="pass-ascii-all">
-              <label for="ascii-all" class="ascii-all-label active">All</label>
-              <input type="checkbox" name="ascii-all" id="ascii-all" checked>
+        <div class="section-characters">
+          <div class="pass-characters pass-lower">
+            <div class="pass-characters-all pass-lower-all">
+              <label for="lower-all" class="characters-all-label active">[a-z]</label>
+              <input type="checkbox" name="lower-all" id="lower-all" class="characters-all" checked>
               <span></span>
             </div>
-            <div class="pass-ascii-separate">
-              <div>
-                <span class="ascii-element ascii-uncheck">
-                    <label for="uncheck-all">Check / uncheck all</label>
-                    <input type="checkbox" id="uncheck-all" checked>
-                    <span></span>
-                  </span>
-              </div>
+            <div class="pass-lower-separate"></div>
+          </div>
+          <div class="pass-characters pass-upper">
+            <div class="pass-characters-all pass-upper-all">
+              <label for="upper-all" class="characters-all-label active">[A-Z]</label>
+              <input type="checkbox" name="upper-all" id="upper-all" class="characters-all" checked>
+              <span></span>
             </div>
+            <div class="pass-upper-separate"></div>
+          </div>
+          <!-- <label>Using ASCII characters in your password <small>(all or exclude separate characters)</small></label> -->
+          <div class="pass-characters pass-ascii">
+            <div class="pass-characters-all pass-ascii-all">
+              <label for="ascii-all" class="characters-all-label active">ASCII</label>
+              <input type="checkbox" name="ascii-all" id="ascii-all" class="characters-all" checked>
+              <span></span>
+            </div>
+            <div class="pass-ascii-separate"></div>
           </div>
         </div>
         <div class="pass-button">
@@ -45,6 +53,7 @@
         <div class="pass-result">
           <label>Generated Password: </label>
           <span></span>
+          <p></p>
         </div>
       </section>
   </div>

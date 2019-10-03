@@ -94,44 +94,48 @@ body {
 }
 
 /* ASCII section */
-.pass-characters {
+.section-characters {
   padding-top: 20px;
 }
-.pass-ascii {
+.pass-characters {
+  display: flex;
+  align-items: center;
   padding: 20px 0;
 }
-.pass-ascii-all {
+.pass-characters-all {
   position: relative;
+  flex: 0 0 160px;
+  margin-bottom: 10px;
 }
-.pass-ascii-all label {
+.pass-characters-all label {
   display: inline-block;
   padding: 0.375rem 0.75rem;
   font-size: 1.2rem;
   font-weight: 400;
   vertical-align: middle;
-  border: 1px solid #DF691A;
+  border: 2px solid #4E5D6C;
   border-radius: 0.25rem;
   cursor: pointer;
-  background-color: #DF691A;
+  background-color: #3e4a56;
   -webkit-transition: all 0.15s ease-in-out;
           transition: all 0.15s ease-in-out;
 }
-.pass-ascii-all label:hover {
-  border-color: #b15315;
-  background-color: #bd5916;
+.pass-characters-all label:hover {
+  background-color: #4E5D6C;
 }
-.pass-ascii-all label.active {
-  border-color: #a64e13;
-  background-color: #b15315;
+.pass-characters-all label.active {
+  border-color: #DEDEDE;
+  border-width: 2px;
+  background-color: #4E5D6C;
 }
-.pass-ascii-all input {
+.pass-characters-all input {
   position: absolute;
   width: 20px;
   height: 20px;
   top: 10px;
   margin: 0;
 }
-.pass-ascii-all span {
+.pass-characters-all span {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -140,19 +144,16 @@ body {
   border-radius: 0.25rem;
   background-color: #ffffff;
 }
-.pass-ascii-all span::before {
+.pass-characters-all span::before {
   display: inline-block;
   width: 100%;
   content: "";
   text-align: center;
 }
-.pass-ascii-all input[type="checkbox"]:checked + span::before {
+.pass-characters-all input[type="checkbox"]:checked + span::before {
   content: "\2714";
 }
-.pass-ascii-separate {
-  padding: 20px 0;
-}
-.ascii-element {
+.character-element {
   display: inline-block;
   position: relative;
   height: 22px;
@@ -163,11 +164,11 @@ body {
   font-size: 0; /*to remove margins between inline-block elements*/
   pointer-events: none;
 }
-.ascii-element.active {
+.character-element.active {
   border-color: #ffffff;
   pointer-events: all;
 }
-.ascii-element label {
+.character-element label {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -176,20 +177,22 @@ body {
   text-align: center;
   color: #a09c9c;
   cursor: pointer;
+  background-color: #4E5D6C;
+  border-radius: 0.25rem;
   -webkit-transition: all 0.15s ease-in-out;
           transition: all 0.15s ease-in-out;
 }
-.ascii-element.active label {
+.character-element.active label {
   color: #DEDEDE;
 }
-.ascii-element input {
+.character-element input {
   position: absolute;
   width: 20px;
   height: 20px;
   margin: 0;
   cursor: pointer;
 }
-.ascii-element span {
+.character-element span {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -197,24 +200,17 @@ body {
   color: #2B3E50;
   background-color: #a09c9c;
 }
-.ascii-element.active span {
+.character-element.active span {
   background-color: #ffffff;
 }
-.ascii-element span::before {
+.character-element span::before {
   display: inline-block;
   width: 100%;
   content: "";
   text-align: center;
-  /* vertical-align: middle; */
 }
-.ascii-element input[type="checkbox"]:checked + span::before {
+.character-element input[type="checkbox"]:checked + span::before {
   content: "\2714";
-}
-.ascii-element.ascii-uncheck label {
-  width: auto;
-  padding: 0 6px;
-  letter-spacing: normal;
-  font-size: 0.75rem;
 }
 /* Generate button */
 .btn-generate {
