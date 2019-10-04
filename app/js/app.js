@@ -1,3 +1,4 @@
+'use strict';
 const rangeSlider = document.getElementById('pass-range-slider');
 const marginMin = document.getElementById('slider-margin-value-min');
 const marginMax = document.getElementById('slider-margin-value-max');
@@ -29,68 +30,55 @@ rangeSlider.noUiSlider.on('update', function (values, handle) {
   }
 });
 
+// characters array construction
+function Characters(arr, type) {
+  this.arr = arr;
+  this.type = type;
+}
+Characters.prototype.addList = function() {
+  for (let i = 0; i < this.arr.length; i++) {
+    let element = document.createElement('span');
+    element.classList.add('character-element');
+    element.classList.add(`${this.type}-element`);
+    element.classList.add('active');
+    element.innerHTML = `
+      <label for="el${this.arr[i]}">${this.arr[i]}</label>
+      <input type="checkbox" name="" id="el${this.arr[i]}" checked>
+      <span></span>
+    `;
+    document.querySelector(`.pass-${this.type}-separate`).appendChild(element);
+  }
+} 
+
 document.addEventListener('DOMContentLoaded', addCharacters);
 document.querySelector('.section-characters').addEventListener('click', labelActive);
 document.getElementById('generate').addEventListener('click', generatePass);
 
 // add characters checkboxes
 function addCharacters() {
-  // add ASCII characters checkboxes
-  for (let i = 0; i < asciiArr.length; i++) {
-    let elASCII = document.createElement('span');
-    elASCII.classList.add('character-element');
-    elASCII.classList.add('ascii-element');
-    elASCII.classList.add('active');
-    elASCII.innerHTML = `
-      <label for="el${asciiArr[i]}">${asciiArr[i]}</label>
-      <input type="checkbox" name="" id="el${asciiArr[i]}" checked>
-      <span></span>
-    `;
-    document.querySelector('.pass-ascii-separate').appendChild(elASCII);
-  }
   // add lowercase characters checkboxes
-  for (let i = 0; i < lowercaseArr.length; i++) {
-    let elLowercase = document.createElement('span');
-    elLowercase.classList.add('character-element');
-    elLowercase.classList.add('lower-element');
-    elLowercase.classList.add('active');
-    elLowercase.innerHTML = `
-      <label for="el${lowercaseArr[i]}">${lowercaseArr[i]}</label>
-      <input type="checkbox" name="" id="el${lowercaseArr[i]}" checked>
-      <span></span>
-    `;
-    document.querySelector('.pass-lower-separate').appendChild(elLowercase);
-  }
+  const lowercase = new Characters(lowercaseArr, 'lower');
+  lowercase.addList();
+  
   // add uppercase characters checkboxes
-  for (let i = 0; i < uppercaseArr.length; i++) {
-    let elUppercase = document.createElement('span');
-    elUppercase.classList.add('character-element');
-    elUppercase.classList.add('upper-element');
-    elUppercase.classList.add('active');
-    elUppercase.innerHTML = `
-      <label for="el${uppercaseArr[i]}">${uppercaseArr[i]}</label>
-      <input type="checkbox" name="" id="el${uppercaseArr[i]}" checked>
-      <span></span>
-    `;
-    document.querySelector('.pass-upper-separate').appendChild(elUppercase);
-  }
+  const uppercase = new Characters(uppercaseArr, 'upper');
+  uppercase.addList();
+  
+  // add number characters checkboxes
+  const number = new Characters(numberArr, 'number');
+  number.addList();
+
+  // add ASCII characters checkboxes
+  const ascii = new Characters(asciiArr, 'ascii');
+  ascii.addList();
 }
 
 // toggle lowercase/uppercase/ASCII checkbox class "active"
 function labelActive(event) {
-  if (event.target == this.querySelector('#ascii-all')) {
-    // console.log(event.target);
-    this.querySelector('label[for="ascii-all"]').classList.toggle('active');
-    // enable/disable single ascii elements
-    const singleArr = this.querySelectorAll('.ascii-element');
-    singleArr.forEach( (elem) => {
-      elem.classList.toggle('active');
-    })
-  }
   if (event.target == this.querySelector('#lower-all')) {
     // console.log(event.target);
     this.querySelector('label[for="lower-all"]').classList.toggle('active');
-    // enable/disable single ascii elements
+    // enable/disable single lowercase elements
     const singleArr = this.querySelectorAll('.lower-element');
     singleArr.forEach( (elem) => {
       elem.classList.toggle('active');
@@ -99,8 +87,26 @@ function labelActive(event) {
   if (event.target == this.querySelector('#upper-all')) {
     // console.log(event.target);
     this.querySelector('label[for="upper-all"]').classList.toggle('active');
-    // enable/disable single ascii elements
+    // enable/disable single uppercase elements
     const singleArr = this.querySelectorAll('.upper-element');
+    singleArr.forEach( (elem) => {
+      elem.classList.toggle('active');
+    })
+  }
+  if (event.target == this.querySelector('#number-all')) {
+    // console.log(event.target);
+    this.querySelector('label[for="number-all"]').classList.toggle('active');
+    // enable/disable single number elements
+    const singleArr = this.querySelectorAll('.number-element');
+    singleArr.forEach( (elem) => {
+      elem.classList.toggle('active');
+    })
+  }
+  if (event.target == this.querySelector('#ascii-all')) {
+    // console.log(event.target);
+    this.querySelector('label[for="ascii-all"]').classList.toggle('active');
+    // enable/disable single ascii elements
+    const singleArr = this.querySelectorAll('.ascii-element');
     singleArr.forEach( (elem) => {
       elem.classList.toggle('active');
     })
