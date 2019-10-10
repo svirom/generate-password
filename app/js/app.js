@@ -97,6 +97,29 @@ const uppercase = new Characters(uppercaseArr, 'upper');
 const number = new Characters(numberArr, 'number');
 const ascii = new Characters(asciiArr, 'ascii');
 
+// initiate copy to clipboard plugin
+let clipboard = new ClipboardJS('.button-copy');
+
+clipboard.on('success', function(event) {
+  if (event.text == '') {
+    document.querySelector('.pass-result').classList.add('error');
+    setTimeout(removeError, 3000);
+    function removeError() {
+      document.querySelector('.pass-result').classList.remove('error');
+    }
+  } else {
+    document.querySelector('.pass-result').classList.add('copied');
+    setTimeout(removeCopied, 3000);
+    function removeCopied() {
+      document.querySelector('.pass-result').classList.remove('copied');
+    }
+  }
+  
+  event.clearSelection();
+});
+
+document.querySelector('#pass-result').value = ''; 
+
 document.addEventListener('DOMContentLoaded', addCharacters);
 document.querySelector('.section-characters').addEventListener('click', labelActive);
 document.getElementById('generate').addEventListener('click', generatePass);
@@ -137,7 +160,6 @@ function generatePass() {
 
   // generate password
   const passArr = [];
-  // const arr = [...lowercaseArr, ...uppercaseArr, ...numberArr, ...asciiArr];
   const arr = [...newLowercaseArr, ...newUppercaseArr, ...newNumberArr, ...newAsciiArr];
   // console.log(arr);
 
@@ -149,5 +171,5 @@ function generatePass() {
   console.log(passArr);
   let pass = passArr.join('');
  
-  document.querySelector('.pass-result span').textContent = `${pass} (${symbolsPass})`;
+  document.querySelector('#pass-result').value = pass;
 }

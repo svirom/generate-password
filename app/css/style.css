@@ -58,11 +58,11 @@ body {
 .wrapper h1 {
   margin: 0;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 400;
 }
 .pass-generate {
-  padding: 60px 40px;
+  padding: 40px;
 }
 .pass-generate label {
   letter-spacing: 1px;
@@ -241,6 +241,69 @@ body {
   -webkit-filter: none;
           filter: none;
 }
-.pass-result span {
-  color: #bdbdbd;
+/* Generated password */
+.pass-result {
+  display: inline-block;
+  position: relative;
+  height: 44px;
+  margin-top: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 0.25rem;
+  font-size: 0; /*to remove margins between inline-block elements*/
+  background-color: #4E5D6C;
+}
+.pass-result::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  content: '';
+  left: 100%;
+  top: 50%;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  -webkit-transform: translateY(-50%);
+     -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.pass-result.copied::after {
+  content: 'Copied!';
+  /* font-weight: 600; */
+  color: #0BDE00;
+}
+.pass-result.error::after {
+  content: 'Nothing to copy!';
+  color: red;
+}
+.pass-result label {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: top;
+  color: #EBEBEB;
+  letter-spacing: normal;
+  border-radius: 0.25rem;
+}
+.pass-result input {
+  display: inline-block;
+  height: 42px;
+  width: 360px;
+  padding: 0.375rem 0.2rem;
+  font-size: 0.9rem;
+  color: #2B3E50;
+  text-align: center;
+  vertical-align: top;
+  border: 2px solid #ffffff;
+  box-shadow: none;
+  background-color: #ffffff;
+}
+.pass-result button {
+  height: 42px;
+  width: 42px;
+  border: 0;
+  cursor: pointer;
+  background: #ffffff url('../img/copy-icon3.png') center/cover no-repeat;
 }

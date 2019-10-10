@@ -45,7 +45,6 @@
             </div>
             <div class="pass-number-separate"></div>
           </div>
-          <!-- <label>Using ASCII characters in your password <small>(all or exclude separate characters)</small></label> -->
           <div class="pass-characters pass-ascii">
             <div class="pass-characters-all pass-ascii-all">
               <label for="ascii-all" class="characters-all-label active">ASCII</label>
@@ -59,15 +58,17 @@
           <button class="btn-generate" id="generate">Generate!</button>
         </div>
         <div class="pass-result">
-          <label>Generated Password: </label>
-          <span></span>
-          <p></p>
+          <label>Your Password: </label>
+          <input id="pass-result" type="text" readonly>
+          <button class="button-copy" data-clipboard-target="#pass-result" title="Copy to Clipboard"></button>
+          <span class="clipboard-copied">Copied!</span>
         </div>
       </section>
   </div>
   
   
   <script src="js/multirange.js"></script>
+  <script src="js/clipboard.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
