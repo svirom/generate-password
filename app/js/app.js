@@ -139,7 +139,10 @@ function labelActive(event) {
   number.changeActive(event);
   ascii.changeActive(event);
 }
-
+let checkLower = true;
+let checkUpper = true;
+let checkNumber = true;
+let checkAscii = true;
 // main function of generating password
 function generatePass() {
   // initiate amount of elements in password (according to password range data)
@@ -157,7 +160,7 @@ function generatePass() {
   uppercase.checkedArr();
   number.checkedArr();
   ascii.checkedArr();
-
+  
   // generate password
   const passArr = [];
   const arr = [...newLowercaseArr, ...newUppercaseArr, ...newNumberArr, ...newAsciiArr];
@@ -168,8 +171,53 @@ function generatePass() {
     passArr.push(randomItem);
   }
 
-  console.log(passArr);
-  let pass = passArr.join('');
- 
-  document.querySelector('#pass-result').value = pass;
+  // check if there are elements from each array (newLowercaseArr, newUppercaseArr, newNumberArr, newAsciiArr) in generated password
+  if (newLowercaseArr.length > 0) {
+    checkLower = false;
+    passArr.forEach( elem => {
+      let checkTrue = newLowercaseArr.indexOf(elem);
+      if (checkTrue > -1) {
+        return checkLower = true;
+      }
+    } )
+  }
+
+  if (newUppercaseArr.length > 0) {
+    checkUpper = false;
+    passArr.forEach( elem => {
+      let checkTrue = newUppercaseArr.indexOf(elem);
+      if (checkTrue > -1) {
+        return checkUpper = true;
+      }
+    } )
+  }
+
+  if (newNumberArr.length > 0) {
+    checkNumber = false;
+    passArr.forEach( elem => {
+      let checkTrue = newNumberArr.indexOf(elem);
+      if (checkTrue > -1) {
+        return checkNumber = true;
+      }
+    } )
+  }
+
+  if (newAsciiArr.length > 0) {
+    checkAscii = false;
+    passArr.forEach( elem => {
+      let checkTrue = newAsciiArr.indexOf(elem);
+      if (checkTrue > -1) {
+        return checkAscii = true;
+      }
+    } )
+  }
+
+  if ( (checkLower === false) || (checkUpper === false) || (checkNumber === false) || (checkAscii === false) ) {
+    generatePass();
+  } else {
+    let pass = passArr.join('');
+      
+    document.querySelector('#pass-result').value = pass;
+  }
+
 }
