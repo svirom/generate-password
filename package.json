@@ -1,0 +1,27 @@
+{
+  "name": "generatepassword",
+  "version": "1.0.0",
+  "description": "most flexible password generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://svirom@bitbucket.org/romanjuk/generatepassword.git"
+  },
+  "author": "svirom",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/romanjuk/generatepassword#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-terser": "^1.2.0"
+  },
+  "dependencies": {}
+}
