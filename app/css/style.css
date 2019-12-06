@@ -50,20 +50,19 @@ body {
   background-color: #2B3E50;
 }
 .wrapper {
-  height: 100vh;
   max-width: 1200px;
   margin: auto;
-  padding: 20px;
+  padding: 20px 20px 60px;
 }
 .wrapper h1 {
-  margin: 0;
+  margin: 0 0 2rem;
   text-align: center;
   font-size: 2rem;
   font-weight: 400;
 }
-.pass-generate {
+/* .pass-generate {
   padding: 40px;
-}
+} */
 .pass-generate label {
   letter-spacing: 1px;
 }
@@ -306,4 +305,33 @@ body {
   border: 0;
   cursor: pointer;
   background: #ffffff url('../img/copy-icon.png') center/cover no-repeat;
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper h1 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  .pass-characters-all {
+    flex: 0 0 110px;
+  }
+  .character-element {
+    margin-right: 10px;
+  }
+  .pass-result {
+    text-align: center;
+  }
+  .pass-result input {
+    width: calc(100% - 42px);
+    margin-top: 4px;
+  }
+  .pass-result button {
+    margin-top: 4px;
+  }
+  .pass-result::after {
+    width: auto;
+    top: auto;
+    bottom: -90px;
+    left: 0;
+  }
 }
