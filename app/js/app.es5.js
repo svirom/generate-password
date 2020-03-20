@@ -1,24 +1,12 @@
 'use strict';
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 var rangeSlider = document.getElementById('pass-range-slider');
 var marginMin = document.getElementById('slider-margin-value-min');
 var marginMax = document.getElementById('slider-margin-value-max');
 var lowercaseArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var uppercaseArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var numberArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-var asciiArr = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', '-', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'];
-var newLowercaseArr = [];
-var newUppercaseArr = [];
-var newNumberArr = [];
-var newAsciiArr = []; // initiate range slider (amount of characters in password)
+var asciiArr = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', '-', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']; // initiate range slider (amount of characters in password)
 
 noUiSlider.create(rangeSlider, {
   start: [8, 32],
@@ -36,7 +24,28 @@ rangeSlider.noUiSlider.on('update', function (values, handle) {
   } else {
     marginMin.innerHTML = Number(values[handle]);
   }
-}); // characters array construction
+}); // initiate copy to clipboard plugin
+
+var clipboard = new ClipboardJS('.button-copy');
+clipboard.on('success', function (event) {
+  if (event.text == '') {
+    var removeError = function removeError() {
+      document.querySelector('.pass-result').classList.remove('error');
+    };
+
+    document.querySelector('.pass-result').classList.add('error');
+    setTimeout(removeError, 3000);
+  } else {
+    var removeCopied = function removeCopied() {
+      document.querySelector('.pass-result').classList.remove('copied');
+    };
+
+    document.querySelector('.pass-result').classList.add('copied');
+    setTimeout(removeCopied, 3000);
+  }
+
+  event.clearSelection();
+}); // characters array constructor
 
 function Characters(arr, type) {
   this.arr = arr;
@@ -69,7 +78,7 @@ Characters.prototype.changeActive = function () {
 }; // return checked checkboxes array for password generator
 
 
-Characters.prototype.checkedArr = function () {
+Characters.prototype.checkedArr = function (lower, upper, number, ascii) {
   var _this = this;
 
   var singleArr = document.querySelectorAll(".".concat(this.type, "-element"));
@@ -78,20 +87,20 @@ Characters.prototype.checkedArr = function () {
 
     if (document.querySelector("#".concat(_this.type, "-all")).checked == true) {
       if (elem.querySelector('input[type="checkbox"]').checked == true) {
-        if (_this.type == 'lower') {
-          newLowercaseArr.push(elemText);
+        if (_this.type === 'lower') {
+          lower.push(elemText);
         }
 
-        if (_this.type == 'upper') {
-          newUppercaseArr.push(elemText);
+        if (_this.type === 'upper') {
+          upper.push(elemText);
         }
 
-        if (_this.type == 'number') {
-          newNumberArr.push(elemText);
+        if (_this.type === 'number') {
+          number.push(elemText);
         }
 
-        if (_this.type == 'ascii') {
-          newAsciiArr.push(elemText);
+        if (_this.type === 'ascii') {
+          ascii.push(elemText);
         }
       }
     }
@@ -102,52 +111,30 @@ Characters.prototype.checkedArr = function () {
 var lowercase = new Characters(lowercaseArr, 'lower');
 var uppercase = new Characters(uppercaseArr, 'upper');
 var number = new Characters(numberArr, 'number');
-var ascii = new Characters(asciiArr, 'ascii'); // initiate copy to clipboard plugin
-
-var clipboard = new ClipboardJS('.button-copy');
-clipboard.on('success', function (event) {
-  if (event.text == '') {
-    var removeError = function removeError() {
-      document.querySelector('.pass-result').classList.remove('error');
-    };
-
-    document.querySelector('.pass-result').classList.add('error');
-    setTimeout(removeError, 3000);
-  } else {
-    var removeCopied = function removeCopied() {
-      document.querySelector('.pass-result').classList.remove('copied');
-    };
-
-    document.querySelector('.pass-result').classList.add('copied');
-    setTimeout(removeCopied, 3000);
-  }
-
-  event.clearSelection();
-});
+var ascii = new Characters(asciiArr, 'ascii');
+var characters = [lowercase, uppercase, number, ascii];
+var checkLower = true;
+var checkUpper = true;
+var checkNumber = true;
+var checkAscii = true;
 document.querySelector('#pass-result').value = '';
 document.addEventListener('DOMContentLoaded', addCharacters);
 document.querySelector('.section-characters').addEventListener('click', labelActive);
 document.getElementById('generate').addEventListener('click', generatePass); // add characters checkboxes
 
 function addCharacters() {
-  lowercase.addList();
-  uppercase.addList();
-  number.addList();
-  ascii.addList();
+  characters.forEach(function (arr) {
+    arr.addList();
+  });
 } // toggle lowercase/uppercase/number/ASCII checkbox class "active"
 
 
 function labelActive(event) {
-  lowercase.changeActive(event);
-  uppercase.changeActive(event);
-  number.changeActive(event);
-  ascii.changeActive(event);
-}
+  characters.forEach(function (arr) {
+    arr.changeActive(event);
+  });
+} // main function of generating password
 
-var checkLower = true;
-var checkUpper = true;
-var checkNumber = true;
-var checkAscii = true; // main function of generating password
 
 function generatePass() {
   // initiate amount of elements in password (according to password range data)
@@ -155,29 +142,28 @@ function generatePass() {
   var passMax = Number(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
   var symbolsPass = Math.floor(Math.random() * (passMax - passMin + 1)) + passMin; // initiate empty arrays for checked characters
 
-  newLowercaseArr = [];
-  newUppercaseArr = [];
-  newNumberArr = [];
-  newAsciiArr = []; // create new character arrays from only checked
+  var lowercaseArrChecked = [];
+  var uppercaseArrChecked = [];
+  var numberArrChecked = [];
+  var asciiArrChecked = []; // create new character arrays from only checked
 
-  lowercase.checkedArr();
-  uppercase.checkedArr();
-  number.checkedArr();
-  ascii.checkedArr(); // generate password
+  characters.forEach(function (arr) {
+    arr.checkedArr(lowercaseArrChecked, uppercaseArrChecked, numberArrChecked, asciiArrChecked);
+  }); // generate password
 
   var passArr = [];
-  var arr = [].concat(_toConsumableArray(newLowercaseArr), _toConsumableArray(newUppercaseArr), _toConsumableArray(newNumberArr), _toConsumableArray(newAsciiArr)); // console.log(arr);
+  var arr = [].concat(lowercaseArrChecked, uppercaseArrChecked, numberArrChecked, asciiArrChecked); // console.log(arr);
 
   for (var i = 1; i <= symbolsPass; i++) {
     var randomItem = arr[Math.floor(Math.random() * arr.length)];
     passArr.push(randomItem);
-  } // check if there are elements from each array (newLowercaseArr, newUppercaseArr, newNumberArr, newAsciiArr) in generated password
+  } // check if there are elements from each array (lowercaseArrChecked, uppercaseArrChecked, numberArrChecked, asciiArrChecked) in generated password
 
 
-  if (newLowercaseArr.length > 0) {
+  if (lowercaseArrChecked.length > 0) {
     checkLower = false;
     passArr.forEach(function (elem) {
-      var checkTrue = newLowercaseArr.indexOf(elem);
+      var checkTrue = lowercaseArrChecked.indexOf(elem);
 
       if (checkTrue > -1) {
         return checkLower = true;
@@ -185,10 +171,10 @@ function generatePass() {
     });
   }
 
-  if (newUppercaseArr.length > 0) {
+  if (uppercaseArrChecked.length > 0) {
     checkUpper = false;
     passArr.forEach(function (elem) {
-      var checkTrue = newUppercaseArr.indexOf(elem);
+      var checkTrue = uppercaseArrChecked.indexOf(elem);
 
       if (checkTrue > -1) {
         return checkUpper = true;
@@ -196,10 +182,10 @@ function generatePass() {
     });
   }
 
-  if (newNumberArr.length > 0) {
+  if (numberArrChecked.length > 0) {
     checkNumber = false;
     passArr.forEach(function (elem) {
-      var checkTrue = newNumberArr.indexOf(elem);
+      var checkTrue = numberArrChecked.indexOf(elem);
 
       if (checkTrue > -1) {
         return checkNumber = true;
@@ -207,10 +193,10 @@ function generatePass() {
     });
   }
 
-  if (newAsciiArr.length > 0) {
+  if (asciiArrChecked.length > 0) {
     checkAscii = false;
     passArr.forEach(function (elem) {
-      var checkTrue = newAsciiArr.indexOf(elem);
+      var checkTrue = asciiArrChecked.indexOf(elem);
 
       if (checkTrue > -1) {
         return checkAscii = true;

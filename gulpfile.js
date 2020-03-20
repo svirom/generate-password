@@ -15,7 +15,7 @@ gulp.task('browser-sync', function(){
 			baseDir: 'app'
 		},
 		port: 8080,
-		//notify: false
+		notify: false
 	});
 });
 
@@ -34,18 +34,20 @@ gulp.task('html', function(){
   //   .pipe(gulp.dest('dist'));	
 });
 
-gulp.task('img', () => {
-  return gulp.src('app/img/**/*')
-    .pipe(gulp.dest('dist/img'));
-});
-
 gulp.task('css', () => {
-  return gulp.src(['app/css/fonts.css', 'app/css/multirange.css', 'app/css/style.css'])
+  return gulp.src('app/css/**/*.css')
+		.pipe(browserSync.stream());
+  /* return gulp.src(['app/css/fonts.css', 'app/css/multirange.css', 'app/css/style.css'])
     .pipe(sourcemaps.init())
     .pipe(concat('style.min.css'))
     .pipe(cssnano())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist/css')); */
+});
+
+gulp.task('js', () => {
+  return gulp.src('app/js/**/*.js')
+    .pipe(browserSync.stream());
 });
 
 gulp.task('js-babel', () => { // compile js into compatible version
@@ -57,22 +59,33 @@ gulp.task('js-babel', () => { // compile js into compatible version
     .pipe(gulp.dest('app/js'));
 });
 
+gulp.task('img', () => {
+  return gulp.src('app/img/**/*')
+    .pipe(gulp.dest('dist/img'));
+});
+
 // watch app
 gulp.task('default', gulp.series(gulp.parallel('browser-sync', (done) => {
-	// gulp.watch('app/sass/**/*+(.sass|scss)', gulp.series('sass'));
-	// gulp.watch('app/js/**/*.js', gulp.series('js'));
 	gulp.watch('app/**/*.html', gulp.series('html'));
+	gulp.watch('app/css/**/*.css', gulp.series('css'));
+	gulp.watch('app/js/**/*.js', gulp.series('js'));
 	done();
 })));
 
 // build of distribution
-gulp.task('build', gulp.series(['clean', gulp.parallel(['html', 'img', 'css', 'js-babel'])], (done) => {
+gulp.task('build', gulp.series(['clean', gulp.parallel(['img', 'js-babel'])], (done) => {
   gulp.src('app/**/*.html')
     .pipe(htmlreplace({
       css: 'css/style.min.css',
       js: 'js/script.min.js'
     }))
-    .pipe(gulp.dest('dist'));	
+    .pipe(gulp.dest('dist'));
+  gulp.src(['app/css/fonts.css', 'app/css/multirange.css', 'app/css/style.css'])
+    .pipe(sourcemaps.init())
+    .pipe(concat('style.min.css'))
+    .pipe(cssnano())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('dist/css'));
   gulp.src(['app/js/multirange.js', 'app/js/clipboard.min.js', 'app/js/app.es5.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('script.min.js'))
